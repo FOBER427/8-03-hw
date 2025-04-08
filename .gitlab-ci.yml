@@ -1,13 +1,31 @@
 stages:
   - build
   - test
+  - sonarqube
 
+# Stage: Build
 build:
   stage: build
+  image: docker:latest
+  services:
+    - docker:dind
   script:
-    - echo "Building the project..."
+    - docker-compose -f docker-compose.yml up -d --build
 
+# Stage: Test
 test:
   stage: test
+  image: maven:3-jdk-8
   script:
-    - echo "Running tests..."
+    - mvn clean test
+
+# Stage: SonarQube analysis
+sonarqube:
+  stage: sonarqube
+  image: maven:3-jdk-8
+  script:
+    - mvn sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=$SONAR_TOKEN
+  only:
+    - main
+  dependencies:
+    - build
