@@ -24,8 +24,3 @@ GitLab успешно развернут и доступен по адресу h
 - [Дополнительный материал для занятия "8.3. GitLab"](https://github.com/netology-code/sdvps-materials/tree/main/gitlab)
 
 
-
-
-
-
-![GitLab CI/CD pipeline](Images/1.png)
